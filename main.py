@@ -1,6 +1,5 @@
 import numpy as np
 import os
-import pickle
 import sys
 
 
@@ -9,7 +8,6 @@ BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 TRAINING_DATA_DIR = os.path.join(BASE_DIR, 'training_data')
 BINARY_DIR = os.path.join(TRAINING_DATA_DIR, 'binary')
 BIPOLAR_DIR = os.path.join(TRAINING_DATA_DIR, 'bipolar')
-W_TRANSPOSE_PATH = os.path.join(BASE_DIR, 'w_transpose')
 TEST_PATH = os.path.join(BASE_DIR, 'test_input.txt')
 
 
@@ -19,14 +17,6 @@ MAX_EPOCHS = 50
 BINARY_THETA = 0.5
 BIPOLAR_THETA = 0
 ALPHA = 1
-
-
-def _save_w_transpose(w_transpose):
-    pass  # TODO
-
-
-def _load_w_transpose():
-    pass  # TODO
 
 
 def _get_input_vector(input_file_path):
@@ -104,12 +94,12 @@ def train(mode):
 
         epoch += 1
 
-        print('Epoch', epoch)
-        print(number_of_mismatches)
+        print('Epoch:', epoch, 'Number of modified weights:', number_of_mismatches)
 
         if epoch > MAX_EPOCHS:
             break
 
+    print(w_transpose)  # TODO remove
     return w_transpose
 
 
@@ -117,7 +107,7 @@ def test(w_transpose):
     input_vector = _get_input_vector(TEST_PATH)
     y_in = np.matmul(w_transpose, input_vector)
     y_out = _bipolar_activation(y_in)
-    print(y_out)
+    print(y_out)  # TODO remove
 
 
 def run(mode):
